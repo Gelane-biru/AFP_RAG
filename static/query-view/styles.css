@@ -1,0 +1,502 @@
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #e6f0fa;
+  margin: 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+h1 {
+  text-align: center;
+  color: #003087;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.dashboard-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  gap: 24px;
+  margin: 0 auto;
+}
+.sidebar {
+  width: 280px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 48, 135, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.chart-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 48, 135, 0.1);
+  height: 400px;
+}
+.btn-container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.btn-container select, .btn-container button {
+  width: auto;
+  min-width: 150px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+}
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.filter-container h3 {
+  color: #003087;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  text-align: center;
+  text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
+}
+.filter-container label {
+  color: #003087;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 0 3px rgba(96, 165, 250, 0.2);
+}
+.analysis-section {
+  margin-top: 24px;
+}
+.analysis-container {
+  background: linear-gradient(to bottom, #ffffff, #f7faff);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 48, 135, 0.15);
+  max-width: 100%;
+}
+.analysis-container h3 {
+  color: #003087;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  text-align: center;
+  text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
+}
+.keyword-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.keyword-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #d1e0ff;
+  font-size: 0.85rem;
+  color: #1e2a44;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.keyword-list li:last-child {
+  border-bottom: none;
+}
+.keyword-list li:hover {
+  background: #e6f0fa;
+  transform: translateY(-2px);
+}
+.keyword-list .keyword-text {
+  flex: 1;
+  font-weight: 500;
+}
+.keyword-list .keyword-count {
+  width: 24px;
+  height: 24px;
+  background: #003087;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.keyword-list .no-data {
+  text-align: center;
+  font-style: italic;
+  color: #1e2a44;
+  font-size: 0.85rem;
+  padding: 12px;
+}
+button, select, input[type="text"], input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  color: #1e2a44;
+  border: 1px solid #d1e0ff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+select:hover, input[type="text"]:hover, input[type="date"]:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  transform: translateY(-1px);
+}
+select:focus, input[type="text"]:focus, input[type="date"]:focus {
+  border: 1px solid;
+  border-image: linear-gradient(to right, #60a5fa, #2563eb) 1;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+  outline: none;
+}
+select {
+  appearance: none;
+  background: #ffffff url("data:image/svg+xml;utf8,<svg fill='#1e2a44' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 16px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+input[type="text"], input[type="date"] {
+  height: 44px;
+}
+button {
+  background: #003087;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  height: 44px;
+  border-radius: 10px;
+}
+button:hover {
+  background: #2563eb;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  transform: translateY(-1px);
+}
+button:active {
+  transform: translateY(0);
+}
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 48, 135, 0.1);
+}
+th, td {
+  padding: 16px 24px;
+  text-align: left;
+  border-bottom: 1px solid #d1e0ff;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+th {
+  background: #003087;
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+td {
+  color: #1e2a44;
+  font-weight: 400;
+}
+tr:nth-child(even) {
+  background: #f7faff;
+}
+tr:hover {
+  background: #e6f0fa;
+  transition: background 0.2s ease;
+}
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+.pagination-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.pagination-container button, .pagination-container select {
+  width: auto;
+  min-width: 100px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+}
+.pagination-container span {
+  margin-top: 8px;
+  text-align: center;
+  color: #1e2a44;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.loading-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --color: #003087;
+  --animation: 2s ease-in-out infinite;
+}
+.loader .circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: solid 2px var(--color);
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: transparent;
+  animation: circle-keys var(--animation);
+}
+.loader .circle .dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color);
+  animation: dot-keys var(--animation);
+}
+.loader .circle .outline {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  animation: outline-keys var(--animation);
+}
+.circle:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.circle:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.circle:nth-child(4) {
+  animation-delay: 0.9s;
+}
+.circle:nth-child(5) {
+  animation-delay: 1.2s;
+}
+.circle:nth-child(2) .dot {
+  animation-delay: 0.3s;
+}
+.circle:nth-child(3) .dot {
+  animation-delay: 0.6s;
+}
+.circle:nth-child(4) .dot {
+  animation-delay: 0.9s;
+}
+.circle:nth-child(5) .dot {
+  animation-delay: 1.2s;
+}
+.circle:nth-child(1) .outline {
+  animation-delay: 0.9s;
+}
+.circle:nth-child(2) .outline {
+  animation-delay: 1.2s;
+}
+.circle:nth-child(3) .outline {
+  animation-delay: 1.5s;
+}
+.circle:nth-child(4) .outline {
+  animation-delay: 1.8s;
+}
+.circle:nth-child(5) .outline {
+  animation-delay: 2.1s;
+}
+@keyframes circle-keys {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes dot-keys {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes outline-keys {
+  0% {
+    transform: scale(0);
+    outline: solid 20px var(--color);
+    outline-offset: 0;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    outline: solid 0 transparent;
+    outline-offset: 20px;
+    opacity: 0;
+  }
+}
+.loading-text {
+  text-align: center;
+  color: #003087;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 16px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 5px rgba(96, 165, 250, 0.3);
+}
+.content-loading .dashboard-container,
+.content-loading h1,
+.content-loading .btn-container {
+  visibility: hidden;
+}
+@media(max-width: 1024px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    max-width: 900px;
+    padding: 16px;
+  }
+  .chart-container {
+    height: 350px;
+  }
+  .analysis-container {
+    max-width: 100%;
+  }
+}
+@media(max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .chart-container {
+    padding: 16px;
+    height: 300px;
+  }
+  .table-container, table {
+    max-width: 100%;
+  }
+  th, td {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+  }
+  .keyword-list li {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  .keyword-list .keyword-count {
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+  }
+  .keyword-list .no-data {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+  button, select, input[type="text"], input[type="date"] {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    height: 40px;
+  }
+  .btn-container select, .btn-container button {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    min-width: 120px;
+  }
+  .pagination-container button, .pagination-container select {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    min-width: 90px;
+  }
+  .pagination-container span {
+    font-size: 0.85rem;
+  }
+  .loading-text {
+    font-size: 1rem;
+  }
+  .loader .circle {
+    width: 16px;
+    height: 16px;
+    margin: 0 8px;
+  }
+  .loader .circle .dot {
+    width: 12px;
+    height: 12px;
+  }
+  .loader .circle .outline {
+    width: 16px;
+    height: 16px;
+  }
+}
+@media(max-width: 480px) {
+  .filter-container, .analysis-container {
+    padding: 12px;
+  }
+  .filter-container h3, .analysis-container h3 {
+    font-size: 1rem;
+  }
+  .filter-container label {
+    font-size: 0.85rem;
+  }
+  th, td {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+}

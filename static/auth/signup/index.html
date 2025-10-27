@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup - Polio Virus Query Dashboard</title>
+  <link rel="icon" href="data:," />
+  <!-- Inter font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #e6f0fa;
+      margin: 0;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .content-loading .container {
+      visibility: hidden;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0, 48, 135, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #003087;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    label {
+      color: #003087;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-shadow: 0 0 3px rgba(96, 165, 250, 0.2);
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      background: #ffffff;
+      color: #1e2a44;
+      border: 1px solid #d1e0ff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    input:hover {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+      transform: translateY(-1px);
+    }
+
+    input:focus {
+      border: 1px solid;
+      border-image: linear-gradient(to right, #60a5fa, #2563eb) 1;
+      box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+      outline: none;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 16px;
+      top: 60%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #1e2a44;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    button {
+      background: #003087;
+      color: #ffffff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: #2563eb;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .login-link {
+      text-align: center;
+      color: #1e2a44;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 16px;
+    }
+
+    .login-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      --color: #003087;
+      --animation: 2s ease-in-out infinite;
+    }
+
+    .loader .circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border: solid 2px var(--color);
+      border-radius: 50%;
+      margin: 0 10px;
+      background-color: transparent;
+      animation: circle-keys var(--animation);
+    }
+
+    .loader .circle .dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--color);
+      animation: dot-keys var(--animation);
+    }
+
+    .loader .circle .outline {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      animation: outline-keys var(--animation);
+    }
+
+    .circle:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(5) {
+      animation-delay: 1.2s;
+    }
+
+    .circle:nth-child(2) .dot {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) .dot {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) .dot {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(5) .dot {
+      animation-delay: 1.2s;
+    }
+
+    .circle:nth-child(1) .outline {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .outline {
+      animation-delay: 1.2s;
+    }
+
+    .circle:nth-child(3) .outline {
+      animation-delay: 1.5s;
+    }
+
+    .circle:nth-child(4) .outline {
+      animation-delay: 1.8s;
+    }
+
+    .circle:nth-child(5) .outline {
+      animation-delay: 2.1s;
+    }
+
+    @keyframes circle-keys {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dot-keys {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes outline-keys {
+      0% {
+        transform: scale(0);
+        outline: solid 20px var(--color);
+        outline-offset: 0;
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        outline: solid 0 transparent;
+        outline-offset: 20px;
+        opacity: 0;
+      }
+    }
+
+    .loading-text {
+      text-align: center;
+      color: #003087;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 16px;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 5px rgba(96, 165, 250, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
+      }
+      .container {
+        padding: 24px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      input, button {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      .loading-text {
+        font-size: 1rem;
+      }
+      .loader .circle {
+        width: 16px;
+        height: 16px;
+        margin: 0 8px;
+      }
+      .loader .circle .dot {
+        width: 12px;
+        height: 12px;
+      }
+      .loader .circle .outline {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
+      input, button {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+      }
+      .login-link {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body class="content-loading">
+  <div class="loading-overlay">
+    <div>
+      <div class="loader">
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+      </div>
+      <div class="loading-text">Processing Signup...</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Signup</h1>
+    <form id="signup-form">
+      <div class="input-group">
+        <label for="full-name">Full Name</label>
+        <input type="text" id="full-name" placeholder="Full Name" required />
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Email" required />
+      </div>
+      <div class="input-group">
+        <label for="password">Password (min 6 characters)</label>
+        <input type="password" id="password" placeholder="Password" required />
+        <span class="toggle-password" data-target="password">👁️</span>
+      </div>
+      <div class="input-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+        <span class="toggle-password" data-target="confirm-password">👁️</span>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p class="login-link">Already have an account? <a href="../login/index.html">Log in</a></p>
+  </div>
+
+  <script type="module">
+    import { supabase } from '../supabase.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('signup-form');
+      const loadingOverlay = document.querySelector('.loading-overlay');
+      const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+      // Remove loading overlay after page load
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+        document.body.classList.remove('content-loading');
+      }, 500);
+
+      // Handle form submission
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loadingOverlay.classList.remove('hidden');
+
+        const fullName = document.getElementById('full-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        try {
+          // Client-side validation
+          if (!fullName || !email || !password || !confirmPassword) {
+            throw new Error('Please fill in all fields.');
+          }
+
+          if (password.length < 6) {
+            throw new Error('Password must be at least 6 characters.');
+          }
+
+          if (password !== confirmPassword) {
+            throw new Error('Passwords do not match.');
+          }
+
+          // Supabase signup
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                full_name: fullName,
+              },
+            },
+          });
+
+          if (error) {
+            throw new Error(error.message);
+          }
+
+          alert('Signup successful! Please check your email to confirm.');
+          window.location.href = '../login/index.html';
+        } catch (error) {
+          alert(`Signup error: ${error.message}`);
+          console.error('Signup error:', error);
+        } finally {
+          loadingOverlay.classList.add('hidden');
+        }
+      });
+
+      // Toggle password visibility
+      togglePasswordButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const fieldId = button.dataset.target;
+          const field = document.getElementById(fieldId);
+          field.type = field.type === 'password' ? 'text' : 'password';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
